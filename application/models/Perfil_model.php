@@ -88,7 +88,7 @@ class Perfil_model extends CI_Model{
 //    $mascota = new stdClass();
 //    $mascota->id = 0;
 
-    $query = $this->db->query("select foto.id, foto from anuncio inner join foto on (anuncio.id = foto.id_anuncio) where anuncio.id = $id");
+    $query = $this->db->query("select foto.id, foto, num from anuncio inner join foto on (anuncio.id = foto.id_anuncio) where anuncio.id = $id");
 
     $rs = $query->result();
     if(count($rs) > 0){

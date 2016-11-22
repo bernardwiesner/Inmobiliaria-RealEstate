@@ -28,7 +28,7 @@
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">*Clave</span>
-              <input class="form-control" required name="clave" value="" type="text"/>
+              <input class="form-control" required name="clave" value="" type="password"/>
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">*Nombre</span>

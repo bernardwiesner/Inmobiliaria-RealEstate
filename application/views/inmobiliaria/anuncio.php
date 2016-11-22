@@ -1,4 +1,5 @@
 <a class="btn btn-primary" href="<?php echo base_url('perfil') ?>"><span class="glyphicon glyphicon-chevron-left"></span> Atras</a>
+<?php if(isset($error)) echo "<div class='text-center'><h4>" . $error . "</h4></div>" ?>
 <div class="text-center"><h3>Mis Anuncios</h3></div>
 <form action="<?php echo base_url('perfil/guardar'); ?>" enctype="multipart/form-data" method="post">
   <div class="row">
@@ -10,7 +11,7 @@
       </div>
       <div class="form-group input-group">
         <span class="input-group-addon">Titulo</span>
-        <input class="form-control" name="titulo"  value="<?php echo (isset($anuncio->titulo)?$anuncio->titulo:''); ?>" type="text"/>
+        <input class="form-control" name="titulo" required value="<?php echo (isset($anuncio->titulo)?$anuncio->titulo:''); ?>" type="text"/>
       </div>
       <div class="form-group input-group"  >
         <span class="input-group-addon">Direccion</span>
@@ -110,9 +111,10 @@
           foreach($fotos as $foto){
 
               echo "<div class='img-small'>
-                         <img src='" . base_url("$foto->foto") . "'  width='300' height='200'>
-                       <div class='desc-small'><a onclick='return confirm(\"Seguro?\");' href=" . base_url("perfil/deleteFoto?id_anuncio={$anuncio->id}&id_foto={$foto->id}&path={$foto->foto}") . " >Delete</a></div>
-                     </div>";
+                         <img src='" . base_url("$foto->foto") . "'  width='300' height='200'>";
+                    if($foto->num > 1) { echo " <div class='desc-small'><a onclick='return confirm(\"Seguro?\");' href=" . base_url("perfil/deleteFoto?id_anuncio={$anuncio->id}&id_foto={$foto->id}&path={$foto->foto}") . " >Delete</a></div>";}
+                    elseif(count($fotos) == 1){echo " <div class='desc-small'><a onclick='return confirm(\"Seguro?\");' href=" . base_url("perfil/deleteFoto?id_anuncio={$anuncio->id}&id_foto={$foto->id}&path={$foto->foto}") . " >Delete</a></div>";}
+                     echo "</div>";
           }
           }
       ?>

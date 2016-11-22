@@ -35,7 +35,8 @@ class Perfil extends CI_Controller{
          unset($_POST['num']);
 
          $_POST['id_usuario'] = $_SESSION['id_usuario'];
-         $id_anuncio = $this->Perfil_model->guardarAnuncio($_POST);
+         $id_anuncio = 0;
+         $once = true;
 
      foreach ($_FILES as $key => $value) {
 
@@ -46,12 +47,22 @@ class Perfil extends CI_Controller{
 
              if ( ! $this->upload->do_upload($key)) {
 
-                $error = array('error' => $this->upload->display_errors());
-                $this->load->template('inmobiliaria/perfil', $error);
+                $data = array('error' => $this->upload->display_errors());
+
+                $id = (isset($_POST['id']))?$_POST['id']+0:0;
+                $data['anuncio'] = $this->Perfil_model->cargarAnuncio($id);
+                $data['tipos'] = $this->Perfil_model->listarTipos();
+                $data['acciones'] = $this->Perfil_model->listarAcciones();
+                $data['fotos'] = $this->Perfil_model->cargarFotos($id);
+                $this->load->template('inmobiliaria/anuncio', $data);
+                return;
              }
 
              else {
-
+               if($once == true){
+                $id_anuncio = $this->Perfil_model->guardarAnuncio($_POST);
+                $once =false;
+              }
                 $data = array('upload_data' => $this->upload->data());
 
                 $path = 'files/' . $data['upload_data']['file_name'];
