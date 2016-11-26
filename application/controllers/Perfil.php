@@ -33,14 +33,11 @@ class Perfil extends CI_Controller{
 
          $_POST['id_usuario'] = $_SESSION['id_usuario'];
          $id_anuncio = 0;
-         $once = true;
 
+         $id_anuncio = $this->Perfil_model->guardarAnuncio($_POST);
      foreach ($_FILES as $key => $value) {
 
         if (!empty($value['tmp_name']) && $value['size'] > 0) {
-
-
-
 
              if ( ! $this->upload->do_upload($key)) {
 
@@ -56,10 +53,6 @@ class Perfil extends CI_Controller{
              }
 
              else {
-               if($once == true){
-                $id_anuncio = $this->Perfil_model->guardarAnuncio($_POST);
-                $once =false;
-              }
                 $data = array('upload_data' => $this->upload->data());
 
                 $path = 'files/' . $data['upload_data']['file_name'];

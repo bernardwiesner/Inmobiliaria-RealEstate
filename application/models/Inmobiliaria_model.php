@@ -14,11 +14,11 @@ class Inmobiliaria_model extends CI_Model{
   function listarAnuncios($id_tipo){
     if($id_tipo == 0){
     $query = $this->db->query('select titulo, id_anuncio, foto, ubicacion, precio from anuncio inner join
-    (select min(foto.id) as idfoto, foto.id_anuncio, foto.foto from foto group by foto.id) foto on
+    (select min(foto.id) as idfoto, foto.id_anuncio, foto.foto from foto group by foto.id desc) foto on
     (anuncio.id = foto.id_anuncio) where activo = 1 group by id_anuncio ORDER BY anuncio.id desc');
   }else{ //Filtro
     $query = $this->db->query("select titulo, id_anuncio, foto, ubicacion, precio from anuncio inner join
-    (select min(foto.id) as idfoto, foto.id_anuncio, foto.foto from foto group by foto.id) foto on
+    (select min(foto.id) as idfoto, foto.id_anuncio, foto.foto from foto group by foto.id desc) foto on
     (anuncio.id = foto.id_anuncio) inner join tipo on (anuncio.id_tipo = tipo.id) where activo = 1 and
     tipo.id = {$id_tipo} group by id_anuncio ORDER BY anuncio.id desc");
   }
