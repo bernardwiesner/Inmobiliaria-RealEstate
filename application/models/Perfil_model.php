@@ -38,16 +38,15 @@ class Perfil_model extends CI_Model{
     }
 
   }
-  function guardarFoto($id_anuncio, $path, $id_anuncio_form, $num){
+  function guardarFoto($id_anuncio, $path, $id_anuncio_form){
     $id = $id_anuncio_form;
     $data = array(
       'id_anuncio' => $id_anuncio ,
-      'foto' => $path,
-      'num' => $num
+      'foto' => $path
     );
 
     if($id+0 > 0){
-      $this->db->query("INSERT INTO foto (id_anuncio, foto, num) values ('{$id_anuncio_form}', '$path', '$num') ");
+      $this->db->query("INSERT INTO foto (id_anuncio, foto) values ('{$id_anuncio_form}', '$path') ");
 
     }else{
       if(!$this->db->insert('foto',$data)){
@@ -88,7 +87,7 @@ class Perfil_model extends CI_Model{
 //    $mascota = new stdClass();
 //    $mascota->id = 0;
 
-    $query = $this->db->query("select foto.id, foto, num from anuncio inner join foto on (anuncio.id = foto.id_anuncio) where anuncio.id = $id");
+    $query = $this->db->query("select foto.id, foto from anuncio inner join foto on (anuncio.id = foto.id_anuncio) where anuncio.id = $id order by foto.id");
 
     $rs = $query->result();
     if(count($rs) > 0){

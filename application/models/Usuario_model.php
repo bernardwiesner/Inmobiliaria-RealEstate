@@ -13,6 +13,7 @@ class Usuario_model extends CI_Model{
   function iniciarSesion($usuario, $clave){
     $this->db->where('usuario',$usuario);
     $this->db->where('clave',md5($clave));
+    $this->db->where('activo',1);
 
     $query = $this->db->get('usuario');
     $rs = $query->result();

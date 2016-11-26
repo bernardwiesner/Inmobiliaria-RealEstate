@@ -104,6 +104,13 @@
       <hr></hr>
       <div class="row">
         <div class="col col-sm-8 col-sm-offset-2">
+        <h4>Editar Anuncios</h4>
+        <p>Para eliminar cualquier articulo.</p>
+        <a href="<?php echo base_url('S_admin/anuncios') ?>" class="btn btn-primary" type="submit">Editar Anuncios</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-sm-8 col-sm-offset-2">
         <h4>Editar Usuarios</h4>
         <p>Para eliminar cualquier usuario, o para asignar un usuario como administrador.</p>
         <a href="<?php echo base_url('S_admin/usuarios') ?>" class="btn btn-primary" type="submit">Administrar Usuarios</a>

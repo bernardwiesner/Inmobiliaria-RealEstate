@@ -48,7 +48,18 @@ class S_admin_model extends CI_Model{
     return $query->result();
 
   }
+  function listarAnuncios(){
+    $query = $this->db->query("SELECT * from anuncio ORDER BY id desc");
+    return $query->result();
 
+  }
+  function cargarAnuncio($id){
+    $query = $this->db->query("select * from anuncio where anuncio.id = $id");
+    $rs = $query->result();
+    if(count($rs) > 0){
+      return $rs[0];
+    }
+  }
   function cargarAccion($id){
       $accion = new stdClass();
       $accion->id = 0;
@@ -102,8 +113,16 @@ class S_admin_model extends CI_Model{
   }
   function deleteAccion($id){
     $this->db->where('id=', $id);
-    $this->db->delete('accion'); 
+    $this->db->delete('accion');
 
   }
+  function modificarAnuncio($id, $activo){
+    if($activo == 1){
+      $this->db->query("UPDATE anuncio set activo = 0 where id = $id");
+    }else{
+      $this->db->query("UPDATE anuncio set activo = 1 where id = $id");
+    }
 
+
+  }
 }

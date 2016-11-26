@@ -39,6 +39,15 @@ class S_admin extends CI_Controller{
 
 
   }
+  function anuncios(){
+    $id = (isset($_GET['id']))?$_GET['id']+0:0;
+    $data['anuncio'] = $this->S_admin_model->cargarAnuncio($id);
+    $data['anuncios'] = $this->S_admin_model->listarAnuncios();
+    //echo var_dump($data);
+    $this->load->template('admin/anuncios', $data);
+
+
+  }
   function editarUsuario(){
     if(isset($_POST)){
       if($_POST['id'] == 0){
@@ -82,6 +91,12 @@ class S_admin extends CI_Controller{
     $this->S_admin_model->deleteAccion($id);
     redirect('s_admin');
 
+  }
+  function desactivar_activar(){
+    $id = (isset($_GET['id']))?$_GET['id']+0:0;
+    $activo = (isset($_GET['activo']))?$_GET['activo']+0:0;
+    $this->S_admin_model->modificarAnuncio($id, $activo);
+    redirect("s_admin");
   }
 
 

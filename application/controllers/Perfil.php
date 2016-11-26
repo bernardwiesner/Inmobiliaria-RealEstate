@@ -31,9 +31,6 @@ class Perfil extends CI_Controller{
          $config['max_height']    = 768;
          $this->load->library('upload', $config);
 
-         $num = $_POST['num'];
-         unset($_POST['num']);
-
          $_POST['id_usuario'] = $_SESSION['id_usuario'];
          $id_anuncio = 0;
          $once = true;
@@ -66,11 +63,11 @@ class Perfil extends CI_Controller{
                 $data = array('upload_data' => $this->upload->data());
 
                 $path = 'files/' . $data['upload_data']['file_name'];
-                $this->Perfil_model->guardarFoto($id_anuncio, $path, $_POST['id'], $num);
+                $this->Perfil_model->guardarFoto($id_anuncio, $path, $_POST['id']);
 
              }
          }
-         $num++;
+
        }
 
        redirect("perfil");

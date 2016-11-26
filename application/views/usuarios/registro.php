@@ -14,7 +14,7 @@
     <div class="container" background="000">
       <div class="text-center">
       <h3>Registar Usuario</h3>
-      <p>Los campos con * son oblicatorios</p>
+      <p>Los campos con * son obligatorios</p>
     </div>
       <div class="row">
         <?php echo form_open(base_url('usuario/guardar')) ?>

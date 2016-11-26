@@ -88,7 +88,7 @@
       var limit = 10;
       function addInput(divName){
            if (counter == limit)  {
-                alert("You have reached the limit of adding " + counter + " inputs");
+                alert("No puede agregar mas de 10 fotos");
            }
            else {
                 var newdiv = document.createElement('div');
@@ -112,8 +112,8 @@
 
               echo "<div class='img-small'>
                          <img src='" . base_url("$foto->foto") . "'  width='300' height='200'>";
-                    if($foto->num > 1) { echo " <div class='desc-small'><a onclick='return confirm(\"Seguro?\");' href=" . base_url("perfil/deleteFoto?id_anuncio={$anuncio->id}&id_foto={$foto->id}&path={$foto->foto}") . " >Delete</a></div>";}
-                    elseif(count($fotos) == 1){echo " <div class='desc-small'><a onclick='return confirm(\"Seguro?\");' href=" . base_url("perfil/deleteFoto?id_anuncio={$anuncio->id}&id_foto={$foto->id}&path={$foto->foto}") . " >Delete</a></div>";}
+                    echo " <div class='desc-small'><a onclick='return confirm(\"Seguro?\");' href=" . base_url("perfil/deleteFoto?id_anuncio={$anuncio->id}&id_foto={$foto->id}&path={$foto->foto}") . " >Delete</a></div>";
+
                      echo "</div>";
           }
           }
@@ -124,7 +124,6 @@
         Max. 10 fotos (1 requerida) Tamaño Max: 100KB, 1024*768 <br>
         <?php echo 'Foto: ' . (count($fotos)+1) .  '<input type="file" ';  if((count($fotos)+1) == 1) echo "required"; echo ' name="userfile1" size="20" class="form-control" />'; ?>
       </div>
-      <input type="hidden" name="num" value= <?php echo (count($fotos)+1); ?> >
       <input type="button" class="btn btn-default" value="Añadir Imagen" onClick="addInput('dynamicInput');">
       <input type="button" class="btn btn-default" value="Quitar Imagen" onClick="removeInput();">
       <div class="text-right">

@@ -19,6 +19,7 @@ class Inmobiliaria extends CI_Controller{
     $data['anuncios'] = $this->Inmobiliaria_model->listarAnuncios($id_tipo);
 //    var_dump($data); exit;
     $data['tipos'] = $this->Inmobiliaria_model->listarTipos();
+
     $this->load->template('inmobiliaria/inicio', $data);
   }
   function mapa(){
