@@ -7,6 +7,7 @@ class Perfil extends CI_Controller{
   {
     parent::__construct();
     $this->load->model('Perfil_model');
+    $this->load->model('Usuario_model');
 
     if(!isset($_SESSION['usuario'])){
       redirect('seguridad/denegado');
@@ -16,13 +17,23 @@ class Perfil extends CI_Controller{
 
   function index()
   {
-    $data['anuncios'] = $this->Perfil_model->listarAnuncios($_SESSION['id_usuario']);
+    $data['usuario'] = $this->Usuario_model->cargarUsuario($_SESSION['id_usuario']);
+    //var_dump($data); exit;
     $this->load->template('inmobiliaria/perfil', $data);
   }
+
+  function mis_anuncios(){
+
+    $data['anuncios'] = $this->Perfil_model->listarAnuncios($_SESSION['id_usuario']);
+    $this->load->template('inmobiliaria/mis_anuncios', $data);
+
+  }
+
   function guardar(){
 
     if(isset($_POST)){
     //echo var_dump($_POST); exit;
+
 
          $config['upload_path']   = './files/';
          $config['allowed_types'] = 'gif|jpg|png';
@@ -33,8 +44,12 @@ class Perfil extends CI_Controller{
 
          $_POST['id_usuario'] = $_SESSION['id_usuario'];
          $id_anuncio = 0;
+         $once = true;
+         if($_POST['id'] > 0){
+           $id_anuncio = $this->Perfil_model->guardarAnuncio($_POST);
+           $once = false;
+         }
 
-         $id_anuncio = $this->Perfil_model->guardarAnuncio($_POST);
      foreach ($_FILES as $key => $value) {
 
         if (!empty($value['tmp_name']) && $value['size'] > 0) {
@@ -44,15 +59,23 @@ class Perfil extends CI_Controller{
                 $data = array('error' => $this->upload->display_errors());
 
                 $id = (isset($_POST['id']))?$_POST['id']+0:0;
-                $data['anuncio'] = $this->Perfil_model->cargarAnuncio($id);
+                $data['anuncio'] = (object) array('id' => $id, 'titulo' => $_POST['titulo'], 'direccion' => $_POST['direccion'], 'precio' => $_POST['precio'],
+                'descripcion' => $_POST['descripcion'], 'ubicacion' => $_POST['ubicacion']); // $this->Perfil_model->cargarAnuncio($id);
                 $data['tipos'] = $this->Perfil_model->listarTipos();
                 $data['acciones'] = $this->Perfil_model->listarAcciones();
                 $data['fotos'] = $this->Perfil_model->cargarFotos($id);
+                //echo var_dump($data); exit;
                 $this->load->template('inmobiliaria/anuncio', $data);
                 return;
              }
 
              else {
+                if($once == true){
+                  $id_anuncio = $this->Perfil_model->guardarAnuncio($_POST);
+                  $once = false;
+                 }
+
+
                 $data = array('upload_data' => $this->upload->data());
 
                 $path = 'files/' . $data['upload_data']['file_name'];
@@ -63,7 +86,7 @@ class Perfil extends CI_Controller{
 
        }
 
-       redirect("perfil");
+       redirect("perfil/mis_anuncios");
 
 
     }
@@ -89,7 +112,7 @@ class Perfil extends CI_Controller{
     $id = (isset($_GET['id']))?$_GET['id']+0:0;
     $activo = (isset($_GET['activo']))?$_GET['activo']+0:0;
     $this->Perfil_model->modificarAnuncio($id, $activo);
-    redirect("perfil");
+    redirect("perfil/mis_anuncios");
   }
 
   function deleteFoto(){

@@ -11,16 +11,17 @@ class Inmobiliaria_model extends CI_Model{
   }
 
 
-  function listarAnuncios($id_tipo){
+  function listarAnuncios($limit, $start , $id_tipo){
+
     if($id_tipo == 0){
-    $query = $this->db->query('select titulo, id_anuncio, foto, ubicacion, precio from anuncio inner join
-    (select min(foto.id) as idfoto, foto.id_anuncio, foto.foto from foto group by foto.id desc) foto on
-    (anuncio.id = foto.id_anuncio) where activo = 1 group by id_anuncio ORDER BY anuncio.id desc');
+    $query = $this->db->query("select titulo, id_anuncio, foto, ubicacion, precio, direccion from anuncio inner join
+    (select min(foto.id) as idfoto, foto.id_anuncio, foto.foto from foto group by foto.id ) foto on
+    (anuncio.id = foto.id_anuncio) where activo = 1 group by id_anuncio ORDER BY anuncio.id desc limit " . ($start-1)*$limit . ", $limit");
   }else{ //Filtro
-    $query = $this->db->query("select titulo, id_anuncio, foto, ubicacion, precio from anuncio inner join
-    (select min(foto.id) as idfoto, foto.id_anuncio, foto.foto from foto group by foto.id desc) foto on
+    $query = $this->db->query("select titulo, id_anuncio, foto, ubicacion, precio, direccion from anuncio inner join
+    (select min(foto.id) as idfoto, foto.id_anuncio, foto.foto from foto group by foto.id ) foto on
     (anuncio.id = foto.id_anuncio) inner join tipo on (anuncio.id_tipo = tipo.id) where activo = 1 and
-    tipo.id = {$id_tipo} group by id_anuncio ORDER BY anuncio.id desc");
+    tipo.id = {$id_tipo} group by id_anuncio ORDER BY anuncio.id desc limit " . ($start-1)*$limit . ", $limit");
   }
     return $query->result();
 
@@ -50,16 +51,28 @@ class Inmobiliaria_model extends CI_Model{
   }
   function cargarFotos($id){
 
-    $query = $this->db->query("select foto.* from foto
-    inner join anuncio on(foto.id_anuncio = anuncio.id)
-    where anuncio.id = $id order by foto.id");
+      $query = $this->db->query("select foto.* from foto
+      inner join anuncio on(foto.id_anuncio = anuncio.id)
+      where anuncio.id = $id order by foto.id");
 
-    $rs = $query->result();
-    if(count($rs) > 0){
-      return $rs;
-    }
+      $rs = $query->result();
+      if(count($rs) > 0){
+        return $rs;
+      }
 
 
   }
+  function record_count($id_tipo) {
+    if($id_tipo > 0){
+      $query = $this->db->query("select * from anuncio inner join foto on (anuncio.id = foto.id_anuncio)
+      inner join tipo on (anuncio.id_tipo = tipo.id) where activo=1 and tipo.id = {$id_tipo} group by id_anuncio");
+      $rs = $query->result();
+      return count($rs);
+    }else{
+      $query = $this->db->query("select * from anuncio inner join foto on (anuncio.id = foto.id_anuncio) where activo=1 group by id_anuncio");
+      $rs = $query->result();
+      return count($rs);
+    }
 
+  }
 }

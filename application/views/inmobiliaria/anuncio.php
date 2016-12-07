@@ -1,4 +1,4 @@
-<a class="btn btn-primary" href="<?php echo base_url('perfil') ?>"><span class="glyphicon glyphicon-chevron-left"></span> Atras</a>
+<a class="btn btn-primary" href="<?php echo base_url('perfil/mis_anuncios') ?>"><span class="glyphicon glyphicon-chevron-left"></span> Atras</a>
 <?php if(isset($error)) echo "<div class='text-center'><h4>" . $error . "</h4></div>" ?>
 <div class="text-center"><h3>Mis Anuncios</h3></div>
 <form action="<?php echo base_url('perfil/guardar'); ?>" enctype="multipart/form-data" method="post">
@@ -49,7 +49,7 @@
       </div>
       <div class="form-group input-group">
         <span class="input-group-addon">Precio</span>
-        <input class="form-control" name="precio"  value="<?php echo (isset($anuncio->precio)?$anuncio->precio:''); ?>" type="text"/>
+        <input class="form-control" name="precio" onkeyup="this.value=this.value.replace(/[^\d]/,'')" value="<?php echo (isset($anuncio->precio)?$anuncio->precio:''); ?>" type="text"/>
       </div>
     </div>
   </div>
@@ -92,7 +92,7 @@
            }
            else {
                 var newdiv = document.createElement('div');
-                newdiv.innerHTML = "<div id='userfile"+(counter + 1)+"'><br>Foto "+(counter+1)+"<input class='form-control'  type='file' name='userfile"+(counter + 1)+"' required=''></div>";
+                newdiv.innerHTML = "<div id='userfile"+(counter + 1)+"'><br>Foto "+(counter+1)+"<input class='form-control'  type='file' accept='.jpg,.png,.gif' name='userfile"+(counter + 1)+"' required=''></div>";
                 document.getElementById(divName).appendChild(newdiv);
                 counter++;
            }
@@ -122,7 +122,7 @@
       <div class="form-group input-group" id="dynamicInput">
         <?php echo (isset($error))?$error:'' ;?> <br>
         Max. 10 fotos (1 requerida) Tamaño Max: 100KB, 1024*768 <br>
-        <?php echo 'Foto: ' . (count($fotos)+1) .  '<input type="file" ';  if((count($fotos)+1) == 1) echo "required"; echo ' name="userfile1" size="20" class="form-control" />'; ?>
+        <?php echo 'Foto: ' . (count($fotos)+1) .  '<input type="file" accept=".jpg,.png,.gif" ';  if((count($fotos)+1) == 1) echo "required"; echo ' name="userfile1" size="20" class="form-control" />'; ?>
       </div>
       <input type="button" class="btn btn-default" value="Añadir Imagen" onClick="addInput('dynamicInput');">
       <input type="button" class="btn btn-default" value="Quitar Imagen" onClick="removeInput();">

@@ -1,30 +1,16 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Registro</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-<link rel="stylesheet" href="<?php echo base_url('css/custom.css') ?>">
-<style> .container {width:500px} </style>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-  </head>
-  <body background="<?php echo base_url('images/fondo.jpg') ?>">
-    <div class="container" background="000">
-      <div class="text-center">
-      <h3>Registar Usuario</h3>
-      <p>Los campos con * son obligatorios</p>
-    </div>
       <div class="row">
         <?php echo form_open(base_url('usuario/guardar')) ?>
-          <div class="col col-sm-2"></div>
+         <div class="text-center">
+          <h3>Registar Usuario</h3>
+          <p>Los campos con * son obligatorios</p>
+          <?php if(validation_errors() != false) echo "<div class='alert alert-danger'>" . validation_errors() . "</div>"; ?>
+        </div>
+          <div class="col col-sm-4 col-sm-offset-2">
 
-          <div class="col col-sm-8">
-            <?php echo form_error('usuario'); ?>
+
             <div class="form-group input-group">
               <span class="input-group-addon">*Usuario</span>
-              <input class="form-control" required name="usuario" value="" type="text"/>
+              <input class="form-control" required name="usuario" value="<?php echo (isset($usuario->usuario)?$usuario->usuario:""); ?>" type="text"/>
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">*Clave</span>
@@ -32,45 +18,42 @@
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">*Nombre</span>
-              <input class="form-control" required name="nombre" value="" type="text"/>
+              <input class="form-control" required name="nombre" value="<?php echo (isset($usuario->nombre)?$usuario->nombre:""); ?>" type="text"/>
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">*Apellido</span>
-              <input class="form-control" required name="apellido" value="" type="text"/>
+              <input class="form-control" required name="apellido" value="<?php echo (isset($usuario->apellido)?$usuario->apellido:""); ?>" type="text"/>
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">Cedula</span>
-              <input class="form-control"  name="cedula" value="" type="text"/>
+              <input class="form-control" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="11"  name="cedula" value="<?php echo (isset($usuario->cedula)?$usuario->cedula:""); ?>" type="text"/>
             </div>
+          </div>
+          <div class="col col-sm-4">
             <div class="form-group input-group">
               <span class="input-group-addon">*Correo</span>
-              <input class="form-control" required name="correo" value="" type="text"/>
+              <input class="form-control" required name="correo" value="<?php echo (isset($usuario->correo)?$usuario->correo:""); ?>" type="text"/>
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">*Telefono</span>
-              <input class="form-control" required name="telefono" value="" type="text"/>
+              <input class="form-control" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="10" required name="telefono" value="<?php echo (isset($usuario->telefono)?$usuario->telefono:""); ?>" type="text"/>
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">Celular</span>
-              <input class="form-control" name="celular" value="" type="text"/>
+              <input class="form-control" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="10" name="celular" value="<?php echo (isset($usuario->celular)?$usuario->celular:""); ?>" type="text"/>
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">Fax</span>
-              <input class="form-control" name="fax" value="" type="text"/>
+              <input class="form-control" onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="10" name="fax" value="<?php echo (isset($usuario->fax)?$usuario->fax:""); ?>" type="text"/>
             </div>
             <div class="form-group input-group">
               <span class="input-group-addon">Informacion</span>
-              <input class="form-control" name="informacion" value="" type="text"/>
+              <input class="form-control" name="informacion" value="<?php echo (isset($usuario->informacion)?$usuario->informacion:""); ?>" type="text"/>
             </div>
-            <div class="text-center">
+            <div class="text-right">
               <button class="btn btn-primary" type="submit">Registrar</button>
             </div>
-            <h3></h3>
           </div>
-          <div class="col col-sm-2"></div>
-        <?php echo form_close(); ?>
-
-      </div>
-
-  </body>
-</html>
+            <h3></h3>
+          <?php echo form_close(); ?>
+        </div>

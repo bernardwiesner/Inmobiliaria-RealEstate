@@ -21,7 +21,7 @@
   </head>
   <body data-spy="spyscroll" data-target=".nav" background="<?php echo base_url('images/fondo.jpg') ?>">
 
-    <nav class="navbar navbar-default" style="width:80%; margin:auto">
+    <nav class="navbar navbar-default" style="width:1100px; margin:auto">
        <div class="container-fluid">
          <div class="navbar-header">
            <a class="navbar-brand" href="<?php echo base_url('inmobiliaria') ?>"><img src="<?php echo base_url('images/logo.png') ?>"></a>
@@ -29,7 +29,9 @@
          <ul class="nav navbar-nav">
            <li><a href="<?php echo base_url('inmobiliaria') ?>">Inicio</a></li>
            <?php if(isset($_SESSION['usuario'])){
-           echo "<li><a href=" . base_url('perfil') .">Mis Anuncios</a></li>"; }?>
+           echo "<li><a href=" . base_url('perfil/mis_anuncios') .">Mis Anuncios</a></li>"; }?>
+           <?php if(isset($_SESSION['usuario'])){
+           echo "<li><a href=" . base_url('perfil') .">Perfil</a></li>"; }?>
          </ul>
          <ul class="nav navbar-nav navbar-right">
            <?php if(!isset($_SESSION['usuario'])){
@@ -52,7 +54,7 @@
        </div>
      </nav>
 
-     <div class="container" style="width: 80%; margin:auto; background:white">
+     <div class="container" style="width: 1100px; margin:auto; background:white">
        <!-- Modal Login -->
        <form method="post" action='<?php echo base_url("seguridad/login") ?>'>
            <div id="login-modal" class="modal fade" role="dialog">
